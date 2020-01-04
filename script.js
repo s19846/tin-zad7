@@ -1,6 +1,8 @@
 const gridWidth = 3;
 const gridHeight = 3;
 const neighbourClass = "sasiaduje";
+const containerSelector = ".container";
+const tilesSelector = `${containerSelector} > div`;
 
 function applyNeighbourClass(allElements, index) {
     if(index < 0 || index > (gridWidth * gridHeight - 1)) { return; }
@@ -11,8 +13,9 @@ function applyNeighbourClass(allElements, index) {
     }
 }
 
+
 function identifyNeighbours(e) {
-    let allElements = $(".container > div");
+    let allElements = $(tilesSelector);
     allElements.removeClass(neighbourClass);
 
     let myPosition = allElements.index(e);
@@ -28,6 +31,14 @@ function identifyNeighbours(e) {
     applyNeighbourClass(allElements, leftIndex);
 }
 
-$(".container > div").click(function(e) {
+function shuffleDivs() {
+    // debugger;
+    const sorted = $(tilesSelector).sort((a,b) => .5 - Math.random());
+    $(containerSelector).empty();
+    sorted.appendTo($(containerSelector));
+}
+
+shuffleDivs();
+$(tilesSelector).click(function(e) {
     identifyNeighbours(e.target);
 });
