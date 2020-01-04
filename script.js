@@ -1,6 +1,8 @@
 const gridWidth = 3;
 const gridHeight = 3;
 const neighbourClass = "sasiaduje";
+const containerSelector = ".container";
+const tilesSelector = `${containerSelector} > div`;
 
 function applyNeighbourClass(allElements, index) {
     if(index < 0 || index > (gridWidth * gridHeight - 1)) { return; }
@@ -12,15 +14,15 @@ function applyNeighbourClass(allElements, index) {
 }
 
 function identifyNeighbours(e) {
-    let allElements = $(".container > div");
+    let allElements = $(tilesSelector);
     allElements.removeClass(neighbourClass);
 
     let myPosition = allElements.index(e);
 
     let upIndex = myPosition - gridWidth;
     let downIndex = myPosition + gridWidth;
-    let rightIndex = myPosition + 1;
-    let leftIndex = myPosition - 1;
+    let rightIndex = (myPosition + 1) % gridWidth != 0 ?  myPosition + 1 : -1;
+    let leftIndex = myPosition % gridWidth != 0 ? myPosition - 1 : -1;
 
     applyNeighbourClass(allElements, upIndex);
     applyNeighbourClass(allElements, downIndex);
@@ -35,6 +37,15 @@ function clearBufferClasses() {
     });
 }
 
+
+function shuffleDivs() {
+    // debugger;
+    const sorted = $(tilesSelector).sort((a,b) => .5 - Math.random());
+    $(containerSelector).empty();
+    sorted.appendTo($(containerSelector));
+}
+
+shuffleDivs();
 $(".container > div").click(function(e) {
     let emptyBlock = $('.pusty').get(0);
     let clickedBlock = e.target;
@@ -58,5 +69,5 @@ $(".container > div").click(function(e) {
         toMoveBlock.insertAfter(emptyBlock);
         emptyBlock.insertAfter(blockBefore);
     }
-    // identifyNeighbours(e.target);
+    //identifyNeighbours(e.target);
 });
