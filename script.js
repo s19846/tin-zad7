@@ -1,8 +1,6 @@
 const gridWidth = 3;
 const gridHeight = 3;
 const neighbourClass = "sasiaduje";
-const containerSelector = ".container";
-const tilesSelector = `${containerSelector} > div`;
 
 function applyNeighbourClass(allElements, index) {
     if(index < 0 || index > (gridWidth * gridHeight - 1)) { return; }
@@ -12,7 +10,6 @@ function applyNeighbourClass(allElements, index) {
         current.addClass(neighbourClass);
     }
 }
-
 
 function identifyNeighbours(e) {
     let allElements = $(tilesSelector);
@@ -31,6 +28,7 @@ function identifyNeighbours(e) {
     applyNeighbourClass(allElements, leftIndex);
 }
 
+
 function shuffleDivs() {
     // debugger;
     const sorted = $(tilesSelector).sort((a,b) => .5 - Math.random());
@@ -39,6 +37,27 @@ function shuffleDivs() {
 }
 
 shuffleDivs();
-$(tilesSelector).click(function(e) {
-    identifyNeighbours(e.target);
+$(".container > div").click(function(e) {
+    let emptyBlock = $('.pusty').get(0);
+    let clickedBlock = e.target;
+
+    if (clickedBlock.classList.contains('sasiaduje')) {
+        emptyBlock.style.backgroundColor = 'violet';
+        emptyBlock.classList.add('ready');
+        clickedBlock.classList.add('to-move');
+    }
+
+    if (!clickedBlock.classList.contains('sasiaduje')
+        && !clickedBlock.classList.contains('pusty')) {
+        emptyBlock.style.backgroundColor = 'white';
+        $(".ready, .to-move").each(function (i, v) {
+            v.classList.remove('ready');
+            v.classList.remove('to-move');
+        });
+    }
+
+    if (clickedBlock.classList.contains('ready')) {
+
+    }
+    // identifyNeighbours(e.target);
 });
