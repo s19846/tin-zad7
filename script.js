@@ -28,6 +28,13 @@ function identifyNeighbours(e) {
     applyNeighbourClass(allElements, leftIndex);
 }
 
+function clearBufferClasses() {
+    $(".ready, .to-move").each(function (i, v) {
+        v.classList.remove('ready');
+        v.classList.remove('to-move');
+    });
+}
+
 $(".container > div").click(function(e) {
     let emptyBlock = $('.pusty').get(0);
     let clickedBlock = e.target;
@@ -41,14 +48,15 @@ $(".container > div").click(function(e) {
     if (!clickedBlock.classList.contains('sasiaduje')
         && !clickedBlock.classList.contains('pusty')) {
         emptyBlock.style.backgroundColor = 'white';
-        $(".ready, .to-move").each(function (i, v) {
-            v.classList.remove('ready');
-            v.classList.remove('to-move');
-        });
+        clearBufferClasses();
     }
 
     if (clickedBlock.classList.contains('ready')) {
-        
+        let toMoveBlock = $('.to-move');
+        let emptyBlock = $('.ready');
+        let blockBefore = toMoveBlock.before();
+        toMoveBlock.insertAfter(emptyBlock);
+        emptyBlock.insertAfter(blockBefore);
     }
     // identifyNeighbours(e.target);
 });
