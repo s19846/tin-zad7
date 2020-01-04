@@ -22,8 +22,8 @@ function identifyNeighbours(e) {
 
     let upIndex = myPosition - gridWidth;
     let downIndex = myPosition + gridWidth;
-    let rightIndex = myPosition + 1;
-    let leftIndex = myPosition - 1;
+    let rightIndex = (myPosition + 1) % gridWidth != 0 ?  myPosition + 1 : -1;
+    let leftIndex = myPosition % gridWidth != 0 ? myPosition - 1 : -1;
 
     applyNeighbourClass(allElements, upIndex);
     applyNeighbourClass(allElements, downIndex);
