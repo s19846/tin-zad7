@@ -4,6 +4,8 @@ const neighbourClass = "sasiaduje";
 const containerSelector = ".container";
 const tilesSelector = `${containerSelector} > div`;
 
+// identifyNeighbours(e.target);
+
 function applyNeighbourClass(allElements, index) {
     if(index < 0 || index > (gridWidth * gridHeight - 1)) { return; }
 
@@ -21,8 +23,8 @@ function identifyNeighbours(e) {
 
     let upIndex = myPosition - gridWidth;
     let downIndex = myPosition + gridWidth;
-    let rightIndex = (myPosition + 1) % gridWidth != 0 ?  myPosition + 1 : -1;
-    let leftIndex = myPosition % gridWidth != 0 ? myPosition - 1 : -1;
+    let rightIndex = (myPosition + 1) % gridWidth !== 0 ?  myPosition + 1 : -1;
+    let leftIndex = myPosition % gridWidth !== 0 ? myPosition - 1 : -1;
 
     applyNeighbourClass(allElements, upIndex);
     applyNeighbourClass(allElements, downIndex);
@@ -35,6 +37,7 @@ function clearBufferClasses() {
         v.classList.remove('ready');
         v.classList.remove('to-move');
     });
+    $(".pusty").get(0).style.backgroundColor = 'white';
 }
 
 
@@ -45,7 +48,14 @@ function shuffleDivs() {
     sorted.appendTo($(containerSelector));
 }
 
-shuffleDivs();
+function swapNodes(a, b) {
+    var aparent = a.parentNode;
+    var asibling = a.nextSibling === b ? a : a.nextSibling;
+    b.parentNode.insertBefore(a, b);
+    aparent.insertBefore(b, asibling);
+}
+
+// shuffleDivs();
 $(".container > div").click(function(e) {
     let emptyBlock = $('.pusty').get(0);
     let clickedBlock = e.target;
@@ -58,16 +68,15 @@ $(".container > div").click(function(e) {
 
     if (!clickedBlock.classList.contains('sasiaduje')
         && !clickedBlock.classList.contains('pusty')) {
-        emptyBlock.style.backgroundColor = 'white';
         clearBufferClasses();
     }
 
     if (clickedBlock.classList.contains('ready')) {
-        let toMoveBlock = $('.to-move');
-        let emptyBlock = $('.ready');
-        let blockBefore = toMoveBlock.before();
-        toMoveBlock.insertAfter(emptyBlock);
-        emptyBlock.insertAfter(blockBefore);
+        let toMoveBlock = $('.to-move').get(0);
+        let emptyBlock = $('.ready').get(0);
+        swapNodes(toMoveBlock, emptyBlock);
+        clearBufferClasses();
     }
-    //identifyNeighbours(e.target);
+
+    identifyNeighbours(e.target);
 });
