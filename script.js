@@ -1,6 +1,8 @@
 const gridWidth = 3;
 const gridHeight = 3;
 const neighbourClass = "sasiaduje";
+const containerSelector = ".container";
+const tilesSelector = `${containerSelector} > div`;
 
 function applyNeighbourClass(allElements, index) {
     if(index < 0 || index > (gridWidth * gridHeight - 1)) { return; }
@@ -59,5 +61,5 @@ $(".container > div").click(function(e) {
     if (clickedBlock.classList.contains('ready')) {
 
     }
-    // identifyNeighbours(e.target);
+    //identifyNeighbours(e.target);
 });
