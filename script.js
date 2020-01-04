@@ -4,6 +4,7 @@ const neighbourClass = "sasiaduje";
 const containerSelector = ".container";
 const tilesSelector = `${containerSelector} > div`;
 
+shuffleDivs();
 identifyNeighbours($('.pusty'));
 
 function applyNeighbourClass(allElements, index) {
@@ -40,7 +41,6 @@ function clearBufferClasses() {
 
 
 function shuffleDivs() {
-    // debugger;
     const sorted = $(tilesSelector).sort((a,b) => .5 - Math.random());
     $(containerSelector).empty();
     sorted.appendTo($(containerSelector));
@@ -53,7 +53,6 @@ function swapNodes(a, b) {
     aparent.insertBefore(b, asibling);
 }
 
-// shuffleDivs();
 $(".container > div").click(function(e) {
     let emptyBlock = $('.pusty').get(0);
     let clickedBlock = e.target;
@@ -77,4 +76,6 @@ $(".container > div").click(function(e) {
     }
 
     identifyNeighbours($('.pusty'));
+
+
 });
