@@ -4,15 +4,13 @@ const neighbourClass = "sasiaduje";
 const containerSelector = ".container";
 const tilesSelector = `${containerSelector} > div`;
 
-// identifyNeighbours(e.target);
+identifyNeighbours($('.pusty'));
 
 function applyNeighbourClass(allElements, index) {
     if(index < 0 || index > (gridWidth * gridHeight - 1)) { return; }
 
     let current = $(allElements[index]);
-    if(current.hasClass("pusty")) {
-        current.addClass(neighbourClass);
-    }
+    current.addClass(neighbourClass);
 }
 
 function identifyNeighbours(e) {
@@ -78,5 +76,5 @@ $(".container > div").click(function(e) {
         clearBufferClasses();
     }
 
-    identifyNeighbours(e.target);
+    identifyNeighbours($('.pusty'));
 });
