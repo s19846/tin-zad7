@@ -53,6 +53,20 @@ function swapNodes(a, b) {
     aparent.insertBefore(b, asibling);
 }
 
+function checkForWin() {
+    const actualIds = $(tilesSelector).map(function (e) {
+        //debugger;
+        const id = $(this).attr("id");
+        const onlyNumber = id.match(/\d$/g);
+        return parseInt(onlyNumber);
+    });
+
+
+    const sorted = Object.assign([], actualIds).sort((x,y) => x - y);
+
+    return (JSON.stringify(sorted) === JSON.stringify(actualIds));
+}
+
 $(".container > div").click(function(e) {
     let emptyBlock = $('.pusty').get(0);
     let clickedBlock = e.target;
@@ -76,6 +90,8 @@ $(".container > div").click(function(e) {
     }
 
     identifyNeighbours($('.pusty'));
-
+    if(checkForWin()) {
+        alert("Gratulacje");
+    }
 
 });
