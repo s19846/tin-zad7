@@ -54,17 +54,20 @@ function swapNodes(a, b) {
 }
 
 function checkForWin() {
-    const actualIds = $(tilesSelector).map(function (e) {
+    const actualIds = Object.assign([], $(tilesSelector).map(function (e) {
         //debugger;
         const id = $(this).attr("id");
         const onlyNumber = id.match(/\d$/g);
         return parseInt(onlyNumber);
-    });
+    }));
 
 
     const sorted = Object.assign([], actualIds).sort((x,y) => x - y);
 
-    return (JSON.stringify(sorted) === JSON.stringify(actualIds));
+    const sortedStringified = JSON.stringify(sorted);
+    const actualStringified = JSON.stringify(actualIds);
+    const isWin = sortedStringified === actualStringified;
+    return (isWin);
 }
 
 $(".container > div").click(function(e) {
